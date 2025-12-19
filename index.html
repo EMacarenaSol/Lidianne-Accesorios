@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>LIDIANNE ACCESORIOS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #e6ded6;
+    color: #111;
+}
+
+/* HEADER */
+header {
+    background-color: #111;
+    text-align: center;
+    padding: 30px;
+}
+
+header img {
+    max-width: 200px; /* Logo más pequeño para no pixelar */
+    width: 50%;
+    background-color: #e6ded6;
+    padding: 12px;
+    border-radius: 12px;
+}
+
+header p {
+    color: #c9a24d;
+    letter-spacing: 2px;
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+/* NAV */
+nav {
+    background-color: #111;
+    padding: 12px;
+    text-align: center;
+}
+
+nav a {
+    color: #c9a24d;
+    margin: 0 16px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+nav a:hover {
+    color: white;
+}
+
+/* CONTENEDOR */
+.container {
+    padding: 30px;
+    text-align: center;
+}
+
+.seccion {
+    display: none;
+}
+
+.seccion.activa {
+    display: block;
+}
+
+/* PRODUCTOS GRID */
+.productos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.producto {
+    background: white;
+    border-radius: 18px;
+    padding: 15px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
+}
+
+.producto img {
+    width: 100%;
+    max-height: 180px;
+    object-fit: cover;
+    border-radius: 14px;
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.producto img:hover {
+    transform: scale(1.03);
+}
+
+.producto h3 {
+    font-size: 15px;
+    margin: 10px 0 5px;
+}
+
+.precio {
+    color: #c9a24d;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.btn-wsp {
+    background-color: #111;
+    color: #c9a24d;
+    border: none;
+    padding: 8px 15px;
+    margin-top: 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-wsp:hover {
+    background-color: #c9a24d;
+    color: #111;
+}
+
+/* FOOTER */
+footer {
+    background-color: #111;
+    color: #c9a24d;
+    text-align: center;
+    padding: 18px;
+    margin-top: 50px;
+    font-size: 13px;
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    width: 15cm;   /* ancho fijo */
+    height: 15cm;  /* alto fijo */
+    max-width: 95%;  /* responsive si pantalla < 15cm */
+    max-height: 95%; /* responsive si pantalla < 15cm */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Mantiene proporción sin cortarse */
+    border-radius: 12px;
+}
+
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@media(max-width: 600px) {
+    .productos {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .producto img {
+        max-height: 140px;
+    }
+
+    header img {
+        max-width: 80%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <img src="logo.png" alt="LIDIANNE ACCESORIOS">
+    <p>JOYAS Y ACCESORIOS</p>
+</header>
+
+<nav>
+    <a onclick="mostrarSeccion('inicio')">Inicio</a>
+    <a onclick="mostrarSeccion('productos')">Productos</a>
+    <a onclick="mostrarSeccion('ofertas')">Ofertas</a>
+    <a onclick="mostrarSeccion('contacto')">Contacto</a>
+</nav>
+
+<div class="container">
+
+    <!-- INICIO -->
+    <div id="inicio" class="seccion activa">
+        <h2>¡BIENVENIDA!</h2>
+        <p>Descubrí nuestros accesorios ✨</p>
+    </div>
+
+    <!-- PRODUCTOS -->
+    <div id="productos" class="seccion">
+        <h2>Productos</h2>
+        <div class="productos" id="lista-productos"></div>
+    </div>
+
+    <!-- OFERTAS -->
+    <div id="ofertas" class="seccion">
+        <h2>Ofertas</h2>
+        <div class="productos" id="lista-ofertas"></div>
+    </div>
+
+    <!-- CONTACTO -->
+    <div id="contacto" class="seccion">
+        <h2>Contacto</h2>
+        <p>📱 WhatsApp: +54 9 11 5848-9491</p>
+        <p>📸 Instagram: @lidianne.accesorios</p>
+        <p>📘 Facebook: LIDIANNE Accesorios</p>
+    </div>
+
+</div>
+
+<footer>
+    <p>© 2025 LIDIANNE ACCESORIOS</p>
+</footer>
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+    <span class="modal-close" onclick="cerrarModal()">&times;</span>
+    <div class="modal-content">
+        <img id="modal-img" src="" alt="Producto">
+    </div>
+</div>
+
+<script>
+function mostrarSeccion(id) {
+    document.querySelectorAll('.seccion').forEach(s => s.classList.remove('activa'));
+    document.getElementById(id).classList.add('activa');
+}
+
+// PRODUCTOS
+const productos = [
+    { nombre: "Aritos Plateados", precio: "$10.000", imagen: "1.png" },
+    { nombre: "Aritos Dorados", precio: "$18.000", imagen: "2.png" },
+    { nombre: "Aritos Ositos", precio: "$25.000", imagen: "3.png" },
+    { nombre: "Collar Elegante", precio: "$30.000", imagen: "4.png" },
+    { nombre: "Pulsera Premium", precio: "$22.000", imagen: "5.png" }
+];
+
+// OFERTAS
+const ofertas = [
+    { nombre: "Promo Aritos", precio: "$15.000", imagen: "3.png" }
+];
+
+function crearProductos(containerId, array) {
+    const cont = document.getElementById(containerId);
+    array.forEach(p => {
+        const div = document.createElement("div");
+        div.classList.add("producto");
+        div.innerHTML = `
+            <img src="${p.imagen}" alt="${p.nombre}" onclick="abrirModal('${p.imagen}')">
+            <h3>${p.nombre}</h3>
+            <p class="precio">${p.precio}</p>
+            <a class="btn-wsp" href="https://wa.me/5491158489491?text=Hola!%20Quiero%20comprar%20${encodeURIComponent(p.nombre)}" target="_blank">Comprar por WhatsApp</a>
+        `;
+        cont.appendChild(div);
+    });
+}
+
+crearProductos("lista-productos", productos);
+crearProductos("lista-ofertas", ofertas);
+
+// MODAL
+const modal = document.getElementById("modal");
+const modalImg = document.getElementById("modal-img");
+
+function abrirModal(src) {
+    modal.style.display = "flex";
+    modalImg.src = src;
+}
+
+function cerrarModal() {
+    modal.style.display = "none";
+}
+</script>
+
+</body>
+</html>
